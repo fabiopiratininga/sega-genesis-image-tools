@@ -1,0 +1,22 @@
+[tasks.build-release]
+command = "cargo"
+args = ["build", "--release"]
+
+[tasks.upx]
+dependencies = ["build-release"]
+description = "Comprime o binario gerado com UPX"
+script_runner = "@duckscript"
+script = '''
+# Detecta extensao executavel dependendo da plataforma
+is_windows = eq ${OS} "windows"
+if ${is_windows}
+    bin_path = set target/release/sgit.exe
+else
+    bin_path = set target/release/sgit
+end
+
+exec upx --best ${bin_path}
+'''
+
+[tasks.dist]
+alias = "upx"

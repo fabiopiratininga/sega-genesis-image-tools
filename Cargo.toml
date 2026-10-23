@@ -1,0 +1,16 @@
+[package]
+name = "sgit"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+clap = { version = "4.4", features = ["derive"] }
+image = "0.24"
+rand = "0.8"
+
+[profile.release]
+opt-level = "z"     
+lto = true          
+codegen-units = 1   
+strip = true        
+panic = "abort"     
